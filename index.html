@@ -290,8 +290,8 @@
 <main id="work">
   <div class="filter-bar" role="tablist" aria-label="Filter photos by category">
     <button class="active" data-filter="all" role="tab" aria-selected="true">All</button>
-    <button data-filter="landscape" role="tab" aria-selected="false">Landscape</button>
-    <button data-filter="street" role="tab" aria-selected="false">Street</button>
+    <button data-filter="places" role="tab" aria-selected="false">Places</button>
+    <button data-filter="people" role="tab" aria-selected="false">People</button>
     <button data-filter="film" role="tab" aria-selected="false">Film</button>
   </div>
 
@@ -302,20 +302,20 @@
          <img src="images/your-file.jpg" alt="Short description of the photo">
     3. Tag a photo's category (or categories) using data-tags on the <figure>.
        Multiple tags = photo appears under multiple filters, e.g.:
-         <figure class="photo" data-tags="landscape street">
+         <figure class="photo" data-tags="places people">
     4. Update the figcaption title/location text as needed.
   -->
 
   <div class="gallery" id="gallery">
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Landscape 01<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Street 01<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:4/5">
@@ -323,14 +323,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape street" style="aspect-ratio:16/10">
-      <div class="ph-box" style="aspect-ratio:16/10">Landscape 02<br>— add photo — <br><em>(example: tagged both landscape + street)</em></div>
-      <figcaption><span>Untitled</span><span>Landscape · Street</span></figcaption>
+    <figure class="photo" data-tags="places people" style="aspect-ratio:16/10">
+      <div class="ph-box" style="aspect-ratio:16/10">Places<br>— add photo — <br><em>(example: tagged both places + people)</em></div>
+      <figcaption><span>Untitled</span><span>Places · People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:1/1">
-      <div class="ph-box" style="aspect-ratio:1/1">Street 02<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:1/1">
+      <div class="ph-box" style="aspect-ratio:1/1">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:3/4">
@@ -338,24 +338,24 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:16/10">
-      <div class="ph-box" style="aspect-ratio:16/10">Landscape 03<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:16/10">
+      <div class="ph-box" style="aspect-ratio:16/10">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Street 03<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film street" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Film 03<br>— add photo — <br><em>(example: tagged both film + street)</em></div>
-      <figcaption><span>Untitled</span><span>Film · Street</span></figcaption>
+    <figure class="photo" data-tags="film people" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">Film 03<br>— add photo — <br><em>(example: tagged both film + people)</em></div>
+      <figcaption><span>Untitled</span><span>Film · People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:1/1">
-      <div class="ph-box" style="aspect-ratio:1/1">Landscape 04<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:1/1">
+      <div class="ph-box" style="aspect-ratio:1/1">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:4/5">
@@ -363,14 +363,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Street 04<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Landscape 05<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:1/1">
@@ -378,14 +378,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:16/10">
-      <div class="ph-box" style="aspect-ratio:16/10">Street 05<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:16/10">
+      <div class="ph-box" style="aspect-ratio:16/10">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Landscape 06<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:4/5">
@@ -393,14 +393,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Street 06<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:1/1">
-      <div class="ph-box" style="aspect-ratio:1/1">Landscape 07<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:1/1">
+      <div class="ph-box" style="aspect-ratio:1/1">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:3/4">
@@ -408,14 +408,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Street 07<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:16/10">
-      <div class="ph-box" style="aspect-ratio:16/10">Landscape 08<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:16/10">
+      <div class="ph-box" style="aspect-ratio:16/10">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:4/5">
@@ -423,14 +423,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:1/1">
-      <div class="ph-box" style="aspect-ratio:1/1">Street 08<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:1/1">
+      <div class="ph-box" style="aspect-ratio:1/1">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Landscape 09<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:3/4">
@@ -438,14 +438,14 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:4/5">
-      <div class="ph-box" style="aspect-ratio:4/5">Street 09<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:4/5">
+      <div class="ph-box" style="aspect-ratio:4/5">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="landscape" style="aspect-ratio:3/4">
-      <div class="ph-box" style="aspect-ratio:3/4">Landscape 10<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Landscape</span></figcaption>
+    <figure class="photo" data-tags="places" style="aspect-ratio:3/4">
+      <div class="ph-box" style="aspect-ratio:3/4">Places<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>Places</span></figcaption>
     </figure>
 
     <figure class="photo" data-tags="film" style="aspect-ratio:1/1">
@@ -453,9 +453,9 @@
       <figcaption><span>Untitled</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="street" style="aspect-ratio:16/10">
-      <div class="ph-box" style="aspect-ratio:16/10">Street 10<br>— add photo —</div>
-      <figcaption><span>Untitled</span><span>Street</span></figcaption>
+    <figure class="photo" data-tags="people" style="aspect-ratio:16/10">
+      <div class="ph-box" style="aspect-ratio:16/10">People<br>— add photo —</div>
+      <figcaption><span>Untitled</span><span>People</span></figcaption>
     </figure>
 
   </div>
