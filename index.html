@@ -33,6 +33,15 @@
 
   a{ color:inherit; }
 
+  /* Basic deterrents against casual image saving (not foolproof — screenshots always work) */
+  .gallery img, .lightbox img{
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    pointer-events: auto;
+  }
+
   :focus-visible{
     outline: 2px solid var(--ink);
     outline-offset: 3px;
@@ -73,7 +82,7 @@
 
   /* ---------- Hero ---------- */
   header.hero{
-    padding: 2vw var(--edge) 4vw;
+    padding: 6vw var(--edge) 4vw;
   }
   @keyframes hero-in{
     from{ opacity:0; transform: translateY(16px); }
@@ -121,14 +130,14 @@
   hr.rule{
     border:none;
     border-top:1px solid var(--line);
-    margin: 2vw 0 0;
+    margin: 5vw 0 0;
   }
 
   /* ---------- Filter ---------- */
   .filter-bar{
     display:flex;
     gap: 28px;
-    padding: 12px var(--edge) 18px;
+    padding: 22px var(--edge) 18px;
     flex-wrap: wrap;
     font-size: 0.95rem;
   }
@@ -581,7 +590,10 @@
   <div class="about-grid">
     <h2>About</h2>
     <p>
-      I've always been drawn to interesting places. Photography and time spent in historic preservation got me interested in uncovering the layers a place holds over time — the buildings and streets that give a city its character, the history and people that shape them. I'm drawn to how these layers change, endure, and tell their own stories. As I begin architecture school, I'm excited to see how these same questions shape the way I approach design.
+      This is about uncovering the layers a place holds over time — through the
+      lenses of place and culture. From the buildings and streets that give a place
+      its character to the history and people that shape it, I'm drawn to how these
+      layers change, endure, and tell their own unique stories.
     </p>
   </div>
 </section>
@@ -605,6 +617,11 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Block right-click save prompt on photos (deterrent only, not foolproof)
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
 
   // ---- Random name font on load (7 options) ----
   const fontCount = 7;
