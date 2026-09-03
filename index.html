@@ -73,7 +73,11 @@
 
   /* ---------- Hero ---------- */
   header.hero{
-    padding: 4vw var(--edge) 4vw;
+    padding: 6vw var(--edge) 4vw;
+  }
+  @keyframes hero-in{
+    from{ opacity:0; transform: translateY(16px); }
+    to{ opacity:1; transform: translateY(0); }
   }
   h1.name{
     font-family:'Fraunces', serif;
@@ -83,6 +87,8 @@
     margin: 0 0 18px;
     letter-spacing: -0.01em;
     text-transform: uppercase;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.05s;
   }
   /* Rotating name fonts — one is applied at random on load via JS */
   h1.name.font-1{ font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em; }
@@ -97,6 +103,8 @@
     color: var(--muted);
     max-width: 640px;
     margin: 0 0 3vw;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.2s;
   }
   .tagline{
     font-family:'Fraunces', serif;
@@ -106,19 +114,21 @@
     line-height: 1.05;
     margin: 0;
     max-width: 14ch;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.35s;
   }
 
   hr.rule{
     border:none;
     border-top:1px solid var(--line);
-    margin: 2vw 0 0;
+    margin: 5vw 0 0;
   }
 
   /* ---------- Filter ---------- */
   .filter-bar{
     display:flex;
     gap: 28px;
-    padding: 16px var(--edge) 18px;
+    padding: 22px var(--edge) 18px;
     flex-wrap: wrap;
     font-size: 0.95rem;
   }
@@ -559,11 +569,10 @@
   <div class="about-grid">
     <h2>About</h2>
     <p>
-      I've always been drawn to interesting places. Photography and time spent in historic preservation got me
-      interested in uncovering the layers a place holds over time — the buildings and streets that give a city
-      its character, the history and people that shape them. I'm drawn to how these layers change, endure, and
-      tell their own stories. As I begin architecture school, I'm excited to see how these same questions
-      shape the way I approach design.
+      This is about uncovering the layers a place holds over time — through the
+      lenses of place and culture. From the buildings and streets that give a place
+      its character to the history and people that shape it, I'm drawn to how these
+      layers change, endure, and tell their own unique stories.
     </p>
   </div>
 </section>
