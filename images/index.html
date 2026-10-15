@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cameron Wong — Layers of Place</title>
+<meta name="description" content="Cameron Wong — photographer, architecture student, preservationist. Layers of Place.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600&family=Instrument+Serif&family=Bricolage+Grotesque:wght@600;700&family=Big+Shoulders+Display:wght@600;700&family=Newsreader:wght@500;600&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#FAFAFA;
+    --ink:#121212;
+    --line:#E4E2DC;
+    --muted:#767672;
+    --gap: clamp(12px, 2vw, 22px);
+    --edge: clamp(20px, 5vw, 64px);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+
+  /* Basic deterrents against casual image saving (not foolproof — screenshots always work) */
+  .gallery img, .lightbox img{
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    pointer-events: auto;
+  }
+
+  :focus-visible{
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  /* ---------- Layout shell ---------- */
+  .wrap{
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--edge);
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 22px var(--edge);
+    font-size: 0.9rem;
+  }
+  nav .mark{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.1rem;
+  }
+  nav .links a{
+    text-decoration:none;
+    margin-left: 28px;
+    color: var(--muted);
+    transition: color 0.15s ease;
+  }
+  nav .links a:hover{ color: var(--ink); }
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    padding: 2vw var(--edge) 2vw;
+  }
+  @keyframes hero-in{
+    from{ opacity:0; transform: translateY(16px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size: clamp(2rem, 7.5vw, 5.5rem);
+    line-height: 0.92;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.05s;
+  }
+  /* Rotating name fonts — one is applied at random on load via JS */
+  h1.name.font-1{ font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em; }
+  h1.name.font-2{ font-family:'Instrument Serif', serif; font-weight:400; letter-spacing:0; }
+  h1.name.font-3{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; letter-spacing:-0.02em; }
+  h1.name.font-4{ font-family:'Big Shoulders Display', sans-serif; font-weight:700; letter-spacing:0.01em; }
+  h1.name.font-5{ font-family:'Newsreader', serif; font-weight:500; letter-spacing:-0.01em; }
+  h1.name.font-6{ font-family:'Fraunces', serif; font-style:italic; font-weight:400; letter-spacing:-0.01em; }
+  h1.name.font-7{ font-family:'Zilla Slab', serif; font-weight:700; letter-spacing:0; }
+  .role-line{
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 0 3vw;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.2s;
+  }
+  .tagline{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    margin: 0;
+    max-width: 14ch;
+    animation: hero-in 0.7s ease-out both;
+    animation-delay: 0.35s;
+  }
+
+  hr.rule{
+    border:none;
+    border-top:1px solid var(--line);
+    margin: 1.5vw 0 0;
+  }
+
+  /* ---------- Filter ---------- */
+  .filter-bar{
+    display:flex;
+    gap: 28px;
+    padding: 22px var(--edge) 18px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+  }
+  .filter-bar button{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: inherit;
+    background:none;
+    border:none;
+    padding: 4px 0;
+    color: var(--muted);
+    cursor:pointer;
+    position:relative;
+  }
+  .filter-bar button::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-2px;
+    height:1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .filter-bar button:hover{ color: var(--ink); }
+  .filter-bar button.active{ color: var(--ink); }
+  .filter-bar button.active::after{ transform: scaleX(1); }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    padding: 10px var(--edge) 4vw;
+    column-count: 2;
+    column-gap: var(--gap);
+  }
+  @media (min-width: 640px){ .gallery{ column-count: 3; } }
+  @media (min-width: 1000px){ .gallery{ column-count: 4; } }
+  @media (min-width: 1300px){ .gallery{ column-count: 5; } }
+
+  figure.photo{
+    margin: 0 0 var(--gap);
+    break-inside: avoid;
+    cursor: pointer;
+  }
+  figure.photo.is-hidden{ display:none; }
+
+  .ph-box{
+    width:100%;
+    background: linear-gradient(135deg, #EDEBE4, #E1DED4);
+    border: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align:center;
+    padding: 12px;
+  }
+
+  figcaption{
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0;
+    background: rgba(18,18,18,0.94);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding: 6vw;
+    z-index: 100;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox .lb-inner{
+    max-width: 900px;
+    max-height: 88vh;
+    width:100%;
+    color: var(--paper);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .lightbox .lb-inner img{
+    width:auto;
+    height:auto;
+    max-width: 100%;
+    max-height: 76vh;
+    display:block;
+    object-fit: contain;
+  }
+  .lightbox .ph-box{
+    background: linear-gradient(135deg, #2A2A28, #1B1B1A);
+    color: #9C9C97;
+    border-color: #333;
+    min-height: 50vh;
+  }
+  .lightbox figcaption{ color:#B5B5B0; }
+  .lightbox-close{
+    position:absolute;
+    top: 24px; right: var(--edge);
+    background:none;
+    border:none;
+    color: var(--paper);
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    cursor:pointer;
+  }
+
+  /* ---------- About / Contact ---------- */
+  section.about, section.contact{
+    padding: 6vw var(--edge);
+    border-top: 1px solid var(--line);
+  }
+  section.about .about-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 800px){
+    section.about .about-grid{ grid-template-columns: 5fr 7fr; }
+  }
+  section.about h2, section.contact h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin: 0 0 18px;
+  }
+  section.about p{
+    font-size: 1rem;
+    line-height:1.65;
+    max-width: 62ch;
+    color: #333;
+  }
+
+  section.contact .contact-links{
+    display:flex;
+    gap: 32px;
+    flex-wrap:wrap;
+    font-size: 1rem;
+  }
+  section.contact a{
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease;
+  }
+  section.contact a:hover{ border-color: var(--ink); }
+
+  footer{
+    padding: 22px var(--edge) 32px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span></span>
+  <span class="links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </span>
+</nav>
+
+<header class="hero">
+  <h1 class="name">Cameron<br>Wong</h1>
+  <p class="role-line">Photography&nbsp;&middot;&nbsp;Architecture&nbsp;&middot;&nbsp;Preservation</p>
+  <p class="tagline">Layers of Place</p>
+</header>
+
+<hr class="rule">
+
+<main id="work">
+  <div class="filter-bar" role="tablist" aria-label="Filter photos by category">
+    <button class="active" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button data-filter="places" role="tab" aria-selected="false">Places</button>
+    <button data-filter="people" role="tab" aria-selected="false">People</button>
+    <button data-filter="film" role="tab" aria-selected="false">Film</button>
+  </div>
+
+  <!--
+    HOW TO ADD YOUR OWN PHOTOS:
+    1. Put image files in an /images folder next to this file.
+    2. Replace the <div class="ph-box">...</div> inside a figure with:
+         <img src="images/your-file.jpg" alt="Short description of the photo">
+    3. Tag a photo's category (or categories) using data-tags on the <figure>.
+       Multiple tags = photo appears under multiple filters, e.g.:
+         <figure class="photo" data-tags="places people">
+    4. Update the figcaption title/location text as needed.
+  -->
+
+  <div class="gallery" id="gallery">
+    <figure class="photo" data-tags="people">
+      <img src="images/Laguna-beach-vball.jpg" alt="Volleyball at Laguna Beach" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Volleyball at Laguna Beach</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Laguna-beach-c3-c4.jpg" alt="All we need is Jesus" style="width:100%; height:auto; display:block;">
+      <figcaption><span>All we need is Jesus</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/Laguna-beach-waves.jpg" alt="Wandering to the shore, Laguna Beach" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Wandering to the shore, Laguna Beach</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Laguna-beach-fresh-fish.jpg" alt="Fresh fish, Laguna Beach" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Fresh fish, Laguna Beach</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/Laguna-beach-rocks.jpg" alt="Crashing waves, Laguna Beach" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Crashing waves, Laguna Beach</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Catalina-casino-outside.jpg" alt="Catalina Island Casino" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Catalina Island Casino</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Catalina-casino-inside.jpg" alt="Halls of the Casino, Catalina Island" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Halls of the Casino, Catalina Island</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Seattle-library.jpg" alt="Seattle Public Library" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Seattle Public Library</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Pioneer-square-darkalinos.jpg" alt="Rooting for the home team, Pioneer Square" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Rooting for the home team, Pioneer Square</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Pioneer-square-railspur.jpg" alt="Old and new, Pioneer Square" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Old and new, Pioneer Square</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/UW-quad-fall.jpg" alt="Fall on campus, UW, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Fall on campus, UW, Seattle</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Space-needle-flowers.jpg" alt="Blooming at the Needle, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Blooming at the Needle, Seattle</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/Whistler-park.jpg" alt="Lost Lake, Whistler" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Lost Lake, Whistler</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Granville-gelato.jpg" alt="Gelato at Granville Market" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Gelato at Granville Market</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/Granville-market.jpg" alt="Granville Public Market" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Granville Public Market</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Denver-redrocksflowers.jpg" alt="Red Rocks Park" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Red Rocks Park</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Denver-redrockscouple.jpg" alt="On the Red Rocks trail" style="width:100%; height:auto; display:block;">
+      <figcaption><span>On the Red Rocks trail</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places film">
+      <img src="images/Burien-grandcentral.jpg" alt="Grand Central Bakery, Burien" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Grand Central Bakery, Burien</span><span>People · Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/Burien-beachflower.jpg" alt="Seahurst Park, Burien" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Seahurst Park, Burien</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/DiscoveryPark-friends3.jpg" alt="Friends at Discovery Park" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Friends at Discovery Park</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/DiscoveryPark-friends2.jpg" alt="Walks at Discovery Park" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Walks at Discovery Park</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/DiscoveryPark-friends1.jpg" alt="Photos at Discovery Park" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Photos at Discovery Park</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/Rainier-mountainview.jpg" alt="Mountain views near Rainier" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Mountain views near Rainier</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places film">
+      <img src="images/Rainier-friendshiking.jpg" alt="Hiking near Rainier" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Hiking near Rainier</span><span>People · Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/RHBCRetreat-guyswalk.jpg" alt="RHBC retreat with the guys" style="width:100%; height:auto; display:block;">
+      <figcaption><span>RHBC retreat with the guys</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places film">
+      <img src="images/Seattle-waterfrontcouple.jpg" alt="Seattle Great Wheel" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Seattle Great Wheel</span><span>People · Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/SanDiego-vintagecar.jpg" alt="Cool cars, San Diego" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Cool cars, San Diego</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/SanDiego-belmontpark.jpg" alt="Belmont Park, San Diego" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Belmont Park, San Diego</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places film">
+      <img src="images/SanDiego-surfers.jpg" alt="Pacific Beach surfers, San Diego" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Pacific Beach surfers, San Diego</span><span>People · Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/Scoutevent-hoods.jpg" alt="Scout Motors event, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Scout Motors event, Seattle</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places film">
+      <img src="images/Scoutevent-redtruck.jpg" alt="Vintage Scout Truck, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Vintage Scout Truck, Seattle</span><span>Places · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/Seattle-chairBW.jpg" alt="Taking a break" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Taking a break</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/Seattle-FlowersbagBW.jpg" alt="Daily carry" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Daily carry</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people film">
+      <img src="images/Seattle-vintagecamerasBW.jpg" alt="Vintage cameras" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Vintage cameras</span><span>People · Film</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Seattle-spaceneedle.jpg" alt="Space Needle, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Space Needle, Seattle</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/PikePlace-tent.jpg" alt="World Famous, Pike Place" style="width:100%; height:auto; display:block;">
+      <figcaption><span>World Famous, Pike Place</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people places">
+      <img src="images/PikePlace-couplewindow.jpg" alt="Window seat, Pike Place" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Window seat, Pike Place</span><span>People · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Rome-car.jpg" alt="Car, Rome" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Vintage Fiat, Rome</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Sanfrancisco-candlestick.jpg" alt="Candlestick, Sanfrancisco" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Remains of Candlestick Park</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Seattle-pikeplacepig.jpg" alt="Pikeplacepig, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Pike Place's favorite piggy bank</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Seattle-smithtower.jpg" alt="Smithtower, Seattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Smith Tower</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/UW-cherryblossoms.jpg" alt="Cherryblossoms, UW" style="width:100%; height:auto; display:block;">
+      <figcaption><span>UW campus in bloom</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/UW-closeupblossoms.jpg" alt="Closeupblossoms, UW" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Cherry blossoms, Seattle</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Venice-maincanal.jpg" alt="Maincanal, Venice" style="width:100%; height:auto; display:block;">
+      <figcaption><span>The Grand Canal, Venice</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Venice-pinkbuilding.jpg" alt="Pinkbuilding, Venice" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Buildings in color, Venice</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/WestSeattle-lighthouse.jpg" alt="Lighthouse, WestSeattle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>West Seattle Lighthouse</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Whidbey-lighthouse.jpg" alt="Lighthouse, Whidbey" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Admiralty Head Lighthouse</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Amalfi-umbrellas.jpg" alt="Umbrellas, Amalfi" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Umbrellas, Amalfi</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Amalfi-waterfrontviews.jpg" alt="Waterfrontviews, Amalfi" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Ocean life, Amalfi</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Arizona-taliesinwest.jpg" alt="Taliesinwest, Arizona" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Taliesin West</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Astoria-columbiaship.jpg" alt="Columbiaship, Astoria" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Lightship Columbia, Astoria</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Astoria-shipwreck.jpg" alt="Shipwreck, Astoria" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Wreck of the Peter Iredale, Astoria</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Ballard-leaves.jpg" alt="Leaves, Ballard" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Through the leaves, Ballard</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/NYC-Empirestate.jpg" alt="Empirestate, NYC" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Manhattan, NYC</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/NYC-Kellogsdiner.jpg" alt="Kellogsdiner, NYC" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Brooklyn Diner, NYC</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Georgetown-starbrassworks.jpg" alt="Starbrassworks, Georgetown" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Neon signs, Georgetown</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Milan-bigpiazza.jpg" alt="Bigpiazza, Milan" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Piazza del Duomo, Milan</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Florence-souvenirshop.jpg" alt="Souvenirshop, Florence" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Sun-drenched Florence</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Whidbey-beachlogs.jpg" alt="Beachlogs, Whidbey" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Ebey's Landing</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film places">
+      <img src="images/Arizona-sunglarerocks.jpg" alt="Sunglarerocks, Arizona" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Sedona Desert</span><span>Film · Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Sanfrancisco-oceanbeach.jpg" alt="Oceanbeach, Sanfrancisco" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Ocean Beach with friends</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Sanfrancisco-palacefinearts.jpg" alt="Palacefinearts, Sanfrancisco" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Palace of Fine Arts</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Sanfrancisco-bleachers.jpg" alt="Bleachers, Sanfrancisco" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Fisherman's Wharf, San Francisco</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Whidbey-coupleonbeach.jpg" alt="Coupleonbeach, Whidbey" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Sunset walks, Whidbey Island</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Whidbey-underbridge.jpg" alt="Underbridge, Whidbey" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Deception Pass Bridge</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Amalfi-kidsonrocks.jpg" alt="Kidsonrocks, Amalfi" style="width:100%; height:auto; display:block;">
+      <figcaption><span>On the rocks, Amalfi</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Bainbridge-ferryride.jpg" alt="Ferryride, Bainbridge" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Ferries, Bainbridge Island</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/Baveno-islandtown.jpg" alt="Islandtown, Baveno" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Streets of Isola Bella</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film people">
+      <img src="images/NYC-photoshoot.jpg" alt="Photoshoot, NYC" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Photoshoot moments, NYC</span><span>Film · People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Discoverypark-heart.jpg" alt="Heart, Discoverypark" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Sights at Discovery Park</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Fremont-tattooshop.jpg" alt="Tattooshop, Fremont" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Storefronts of Fremont</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Discoverypark-picnic.jpg" alt="Picnic, Discoverypark" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Picnic at Discovery Park</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Discoverypark-yellowfield.jpg" alt="Yellowfield, Discoverypark" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Fields at Discovery Park</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Rainier-log.jpg" alt="Log, Rainier" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Mount Rainier National Park</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Rainier-sunset.jpg" alt="Sunset, Rainier" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Mount Rainier sunsets</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="places">
+      <img src="images/Bellevue-gardenhouse.jpg" alt="Gardenhouse, Bellevue" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Tateuchi Pavilion, Bellevue</span><span>Places</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Caphill-gymcomp.jpg" alt="Gymcomp, Caphill" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Capitol Hill - Community</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Caphill-lostlake.jpg" alt="Lostlake, Caphill" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Capitol Hill - Friends</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-kanehall.jpg" alt="Kanehall, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-kanehall2.jpg" alt="Kanehall 2, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-quadbench.jpg" alt="Quadbench, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-redsquare.jpg" alt="Redsquare, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-skatepark.jpg" alt="Skatepark, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Skate park, Seattle</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Carson-uwflowers.jpg" alt="Uwflowers, Carson" style="width:100%; height:auto; display:block;">
+      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Newcastle-beachcouple.jpg" alt="Beachcouple, Newcastle" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Eastside views, Bellevue</span><span>People</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="people">
+      <img src="images/Fremont-hiddentattoo.jpg" alt="Hiddentattoo, Fremont" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Daily errands, Seattle</span><span>People</span></figcaption>
+    </figure>
+  </div>
+</main>
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <h2>About</h2>
+    <p>
+      This is about uncovering the layers a place holds over time — through the
+      lenses of place and culture. From the buildings and streets that give a place
+      its character to the history and people that shape it, I'm drawn to how these
+      layers change, endure, and tell their own unique stories.
+    </p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Contact</h2>
+  <div class="contact-links">
+    <a href="https://instagram.com/cameronnwong" target="_blank" rel="noopener">@cameronnwong</a>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; <span id="year"></span> Cameron Wong</span>
+  <span>Seattle, WA</span>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">Close ✕</button>
+  <div class="lb-inner" id="lbInner"></div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Block right-click save prompt on photos (deterrent only, not foolproof)
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+
+  // ---- Random name font on load (7 options) ----
+  const fontCount = 7;
+  const chosen = Math.floor(Math.random() * fontCount) + 1;
+  document.querySelector('h1.name').classList.add('font-' + chosen);
+
+  // ---- Filter logic ----
+  const buttons = document.querySelectorAll('.filter-bar button');
+  const photos = document.querySelectorAll('.photo');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+
+      const filter = btn.dataset.filter;
+      photos.forEach(fig => {
+        const tags = (fig.dataset.tags || '').split(' ');
+        const show = filter === 'all' || tags.includes(filter);
+        fig.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  // ---- Lightbox ----
+  const lightbox = document.getElementById('lightbox');
+  const lbInner = document.getElementById('lbInner');
+  const lbClose = document.getElementById('lightboxClose');
+
+  photos.forEach(fig => {
+    fig.addEventListener('click', () => {
+      lbInner.innerHTML = fig.innerHTML;
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox(){ lightbox.classList.remove('open'); lbInner.innerHTML = ''; }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+<script data-goatcounter="https://cameronwong.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
