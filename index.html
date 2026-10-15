@@ -166,21 +166,22 @@
   .filter-bar button.active::after{ transform: scaleX(1); }
 
   /* ---------- Gallery ---------- */
+  /* Columns are built by JS (see script) so photos read left-to-right, newest first */
   .gallery{
     padding: 10px var(--edge) 4vw;
-    column-count: 2;
-    column-gap: var(--gap);
+    display: flex;
+    gap: var(--gap);
+    align-items: flex-start;
   }
-  @media (min-width: 640px){ .gallery{ column-count: 3; } }
-  @media (min-width: 1000px){ .gallery{ column-count: 4; } }
-  @media (min-width: 1300px){ .gallery{ column-count: 5; } }
+  .gallery-col{
+    flex: 1 1 0;
+    min-width: 0;
+  }
 
   figure.photo{
     margin: 0 0 var(--gap);
-    break-inside: avoid;
     cursor: pointer;
   }
-  figure.photo.is-hidden{ display:none; }
 
   .ph-box{
     width:100%;
@@ -815,7 +816,7 @@
 
   // ---- Filter logic ----
   const buttons = document.querySelectorAll('.filter-bar button');
-  const photos = document.querySelectorAll('.photo');
+  const photos = Array.from(document.querySelectorAll('.photo'));
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -823,13 +824,48 @@
       btn.classList.add('active');
       btn.setAttribute('aria-selected','true');
 
-      const filter = btn.dataset.filter;
-      photos.forEach(fig => {
-        const tags = (fig.dataset.tags || '').split(' ');
-        const show = filter === 'all' || tags.includes(filter);
-        fig.classList.toggle('is-hidden', !show);
-      });
+      currentFilter = btn.dataset.filter;
+      layoutGallery();
     });
+  });
+
+  // ---- Gallery layout: distribute photos across columns left-to-right ----
+  // (keeps the first photo in the code at the top-left, the next to its right, etc.)
+  const gallery = document.getElementById('gallery');
+  let currentFilter = 'all';
+  let currentCols = 0;
+
+  function columnCount(){
+    const w = window.innerWidth;
+    if (w >= 1300) return 5;
+    if (w >= 1000) return 4;
+    if (w >= 640) return 3;
+    return 2;
+  }
+
+  function layoutGallery(){
+    const n = columnCount();
+    currentCols = n;
+    const cols = [];
+    gallery.innerHTML = '';
+    for (let i = 0; i < n; i++){
+      const col = document.createElement('div');
+      col.className = 'gallery-col';
+      gallery.appendChild(col);
+      cols.push(col);
+    }
+    let i = 0;
+    photos.forEach(fig => {
+      const tags = (fig.dataset.tags || '').split(' ');
+      if (currentFilter === 'all' || tags.includes(currentFilter)){
+        cols[i % n].appendChild(fig);
+        i++;
+      }
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    if (columnCount() !== currentCols) layoutGallery();
   });
 
   // ---- Lightbox ----
@@ -843,6 +879,8 @@
       lightbox.classList.add('open');
     });
   });
+
+  layoutGallery();
 
   function closeLightbox(){ lightbox.classList.remove('open'); lbInner.innerHTML = ''; }
 
