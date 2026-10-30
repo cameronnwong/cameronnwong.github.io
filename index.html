@@ -136,11 +136,19 @@
   /* ---------- Filter ---------- */
   .filter-bar{
     display:flex;
-    gap: 28px;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px 28px;
     padding: 22px var(--edge) 18px;
     flex-wrap: wrap;
     font-size: 0.95rem;
   }
+  .filters, .view-toggle{
+    display:flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .view-toggle{ gap: 20px; margin-left: auto; }
   .filter-bar button{
     font-family:'Space Grotesk', sans-serif;
     font-size: inherit;
@@ -177,6 +185,10 @@
     flex: 1 1 0;
     min-width: 0;
   }
+  /* Single-column view: one centered column, ~50% of screen width (full width on phones) */
+  .gallery.single{ justify-content: center; }
+  .gallery.single .gallery-col{ flex: 0 0 50vw; }
+  @media (max-width: 799px){ .gallery.single .gallery-col{ flex-basis: 100%; } }
 
   figure.photo{
     margin: 0 0 var(--gap);
@@ -321,11 +333,21 @@
 <hr class="rule">
 
 <main id="work">
-  <div class="filter-bar" role="tablist" aria-label="Filter photos by category">
-    <button class="active" data-filter="all" role="tab" aria-selected="true">All</button>
-    <button data-filter="places" role="tab" aria-selected="false">Places</button>
-    <button data-filter="people" role="tab" aria-selected="false">People</button>
-    <button data-filter="film" role="tab" aria-selected="false">Film</button>
+    <div class="filter-bar">
+    <div class="filters" role="tablist" aria-label="Filter photos by collection">
+      <button class="active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button data-filter="film" role="tab" aria-selected="false">Film</button>
+      <button data-filter="digital" role="tab" aria-selected="false">Digital</button>
+      <button data-filter="pnw" role="tab" aria-selected="false">PNW</button>
+      <button data-filter="italy-2025" role="tab" aria-selected="false">Italy 2025</button>
+
+      <!-- To add a collection: copy a button above, set data-filter to a lowercase-hyphenated tag,
+           then add that same tag to data-tags on each photo in the collection. -->
+    </div>
+    <div class="view-toggle" role="group" aria-label="Gallery layout">
+      <button type="button" class="active" data-view="grid" aria-pressed="true">Grid</button>
+      <button type="button" data-view="single" aria-pressed="false">Single</button>
+    </div>
   </div>
 
   <!--
@@ -335,439 +357,464 @@
          <img src="images/your-file.jpg" alt="Short description of the photo">
     3. Tag a photo's category (or categories) using data-tags on the <figure>.
        Multiple tags = photo appears under multiple filters, e.g.:
-         <figure class="photo" data-tags="places people">
+         <figure class="photo" data-tags="film pnw">
     4. Update the figcaption title/location text as needed.
   -->
 
   <div class="gallery" id="gallery">
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="film italy-2025">
+      <img src="images/Amalfi-couple.jpg" alt="Amalfi Coast" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Amalfi Coast</span><span>Film · Italy 2025</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film italy-2025">
+      <img src="images/Amalfi-lemons.jpg" alt="Amalfi Coast" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Amalfi Coast</span><span>Film · Italy 2025</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film italy-2025">
+      <img src="images/Amalfi-sailboat.jpg" alt="Amalfi Coast" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Amalfi Coast</span><span>Film · Italy 2025</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film italy-2025">
+      <img src="images/Rome-locks.jpg" alt="Rome" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Rome</span><span>Film · Italy 2025</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="film italy-2025">
+      <img src="images/Venice-skyline.jpg" alt="Venice" style="width:100%; height:auto; display:block;">
+      <figcaption><span>Venice</span><span>Film · Italy 2025</span></figcaption>
+    </figure>
+
+    <figure class="photo" data-tags="digital">
       <img src="images/Laguna-beach-vball.jpg" alt="Volleyball at Laguna Beach" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Volleyball at Laguna Beach</span><span>People</span></figcaption>
+      <figcaption><span>Volleyball at Laguna Beach</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital">
       <img src="images/Laguna-beach-c3-c4.jpg" alt="All we need is Jesus" style="width:100%; height:auto; display:block;">
-      <figcaption><span>All we need is Jesus</span><span>People</span></figcaption>
+      <figcaption><span>All we need is Jesus</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Laguna-beach-waves.jpg" alt="Wandering to the shore, Laguna Beach" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Wandering to the shore, Laguna Beach</span><span>People · Places</span></figcaption>
+      <figcaption><span>Wandering to the shore, Laguna Beach</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Laguna-beach-fresh-fish.jpg" alt="Fresh fish, Laguna Beach" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Fresh fish, Laguna Beach</span><span>Places</span></figcaption>
+      <figcaption><span>Fresh fish, Laguna Beach</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Laguna-beach-rocks.jpg" alt="Crashing waves, Laguna Beach" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Crashing waves, Laguna Beach</span><span>People · Places</span></figcaption>
+      <figcaption><span>Crashing waves, Laguna Beach</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Catalina-casino-outside.jpg" alt="Catalina Island Casino" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Catalina Island Casino</span><span>Places</span></figcaption>
+      <figcaption><span>Catalina Island Casino</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Catalina-casino-inside.jpg" alt="Halls of the Casino, Catalina Island" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Halls of the Casino, Catalina Island</span><span>Places</span></figcaption>
+      <figcaption><span>Halls of the Casino, Catalina Island</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Seattle-library.jpg" alt="Seattle Public Library" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Seattle Public Library</span><span>Places</span></figcaption>
+      <figcaption><span>Seattle Public Library</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Pioneer-square-darkalinos.jpg" alt="Rooting for the home team, Pioneer Square" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Rooting for the home team, Pioneer Square</span><span>Places</span></figcaption>
+      <figcaption><span>Rooting for the home team, Pioneer Square</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Pioneer-square-railspur.jpg" alt="Old and new, Pioneer Square" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Old and new, Pioneer Square</span><span>Places</span></figcaption>
+      <figcaption><span>Old and new, Pioneer Square</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/UW-quad-fall.jpg" alt="Fall on campus, UW, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Fall on campus, UW, Seattle</span><span>Places</span></figcaption>
+      <figcaption><span>Fall on campus, UW, Seattle</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Space-needle-flowers.jpg" alt="Blooming at the Needle, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Blooming at the Needle, Seattle</span><span>Places</span></figcaption>
+      <figcaption><span>Blooming at the Needle, Seattle</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Whistler-park.jpg" alt="Lost Lake, Whistler" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Lost Lake, Whistler</span><span>People · Places</span></figcaption>
+      <figcaption><span>Lost Lake, Whistler</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital">
       <img src="images/Granville-gelato.jpg" alt="Gelato at Granville Market" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Gelato at Granville Market</span><span>People</span></figcaption>
+      <figcaption><span>Gelato at Granville Market</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Granville-market.jpg" alt="Granville Public Market" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Granville Public Market</span><span>People · Places</span></figcaption>
+      <figcaption><span>Granville Public Market</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Denver-redrocksflowers.jpg" alt="Red Rocks Park" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Red Rocks Park</span><span>Places</span></figcaption>
+      <figcaption><span>Red Rocks Park</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital">
       <img src="images/Denver-redrockscouple.jpg" alt="On the Red Rocks trail" style="width:100%; height:auto; display:block;">
-      <figcaption><span>On the Red Rocks trail</span><span>Places</span></figcaption>
+      <figcaption><span>On the Red Rocks trail</span><span>Digital</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Burien-grandcentral.jpg" alt="Grand Central Bakery, Burien" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Grand Central Bakery, Burien</span><span>People · Places · Film</span></figcaption>
+      <figcaption><span>Grand Central Bakery, Burien</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Burien-beachflower.jpg" alt="Seahurst Park, Burien" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Seahurst Park, Burien</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Seahurst Park, Burien</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/DiscoveryPark-friends3.jpg" alt="Friends at Discovery Park" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Friends at Discovery Park</span><span>People · Film</span></figcaption>
+      <figcaption><span>Friends at Discovery Park</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/DiscoveryPark-friends2.jpg" alt="Walks at Discovery Park" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Walks at Discovery Park</span><span>People · Film</span></figcaption>
+      <figcaption><span>Walks at Discovery Park</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/DiscoveryPark-friends1.jpg" alt="Photos at Discovery Park" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Photos at Discovery Park</span><span>People · Film</span></figcaption>
+      <figcaption><span>Photos at Discovery Park</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Rainier-mountainview.jpg" alt="Mountain views near Rainier" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Mountain views near Rainier</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Mountain views near Rainier</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Rainier-friendshiking.jpg" alt="Hiking near Rainier" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Hiking near Rainier</span><span>People · Places · Film</span></figcaption>
+      <figcaption><span>Hiking near Rainier</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/RHBCRetreat-guyswalk.jpg" alt="RHBC retreat with the guys" style="width:100%; height:auto; display:block;">
-      <figcaption><span>RHBC retreat with the guys</span><span>People · Film</span></figcaption>
+      <figcaption><span>RHBC retreat with the guys</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-waterfrontcouple.jpg" alt="Seattle Great Wheel" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Seattle Great Wheel</span><span>People · Places · Film</span></figcaption>
+      <figcaption><span>Seattle Great Wheel</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film">
       <img src="images/SanDiego-vintagecar.jpg" alt="Cool cars, San Diego" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Cool cars, San Diego</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Cool cars, San Diego</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film">
       <img src="images/SanDiego-belmontpark.jpg" alt="Belmont Park, San Diego" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Belmont Park, San Diego</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Belmont Park, San Diego</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places film">
+    <figure class="photo" data-tags="film">
       <img src="images/SanDiego-surfers.jpg" alt="Pacific Beach surfers, San Diego" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Pacific Beach surfers, San Diego</span><span>People · Places · Film</span></figcaption>
+      <figcaption><span>Pacific Beach surfers, San Diego</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Scoutevent-hoods.jpg" alt="Scout Motors event, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Scout Motors event, Seattle</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Scout Motors event, Seattle</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Scoutevent-redtruck.jpg" alt="Vintage Scout Truck, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Vintage Scout Truck, Seattle</span><span>Places · Film</span></figcaption>
+      <figcaption><span>Vintage Scout Truck, Seattle</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-chairBW.jpg" alt="Taking a break" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Taking a break</span><span>People · Film</span></figcaption>
+      <figcaption><span>Taking a break</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-FlowersbagBW.jpg" alt="Daily carry" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Daily carry</span><span>People · Film</span></figcaption>
+      <figcaption><span>Daily carry</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people film">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-vintagecamerasBW.jpg" alt="Vintage cameras" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Vintage cameras</span><span>People · Film</span></figcaption>
+      <figcaption><span>Vintage cameras</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Seattle-spaceneedle.jpg" alt="Space Needle, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Space Needle, Seattle</span><span>Places</span></figcaption>
+      <figcaption><span>Space Needle, Seattle</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/PikePlace-tent.jpg" alt="World Famous, Pike Place" style="width:100%; height:auto; display:block;">
-      <figcaption><span>World Famous, Pike Place</span><span>People · Places</span></figcaption>
+      <figcaption><span>World Famous, Pike Place</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/PikePlace-couplewindow.jpg" alt="Window seat, Pike Place" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Window seat, Pike Place</span><span>People · Places</span></figcaption>
+      <figcaption><span>Window seat, Pike Place</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Rome-car.jpg" alt="Car, Rome" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Vintage Fiat, Rome</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Vintage Fiat, Rome</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film">
       <img src="images/Sanfrancisco-candlestick.jpg" alt="Candlestick, Sanfrancisco" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Remains of Candlestick Park</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Remains of Candlestick Park</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-pikeplacepig.jpg" alt="Pikeplacepig, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Pike Place's favorite piggy bank</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Pike Place's favorite piggy bank</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Seattle-smithtower.jpg" alt="Smithtower, Seattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Smith Tower</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Smith Tower</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/UW-cherryblossoms.jpg" alt="Cherryblossoms, UW" style="width:100%; height:auto; display:block;">
-      <figcaption><span>UW campus in bloom</span><span>Film · Places</span></figcaption>
+      <figcaption><span>UW campus in bloom</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/UW-closeupblossoms.jpg" alt="Closeupblossoms, UW" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Cherry blossoms, Seattle</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Cherry blossoms, Seattle</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Venice-maincanal.jpg" alt="Maincanal, Venice" style="width:100%; height:auto; display:block;">
-      <figcaption><span>The Grand Canal, Venice</span><span>Film · Places</span></figcaption>
+      <figcaption><span>The Grand Canal, Venice</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Venice-pinkbuilding.jpg" alt="Pinkbuilding, Venice" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Buildings in color, Venice</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Buildings in color, Venice</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/WestSeattle-lighthouse.jpg" alt="Lighthouse, WestSeattle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>West Seattle Lighthouse</span><span>Film · Places</span></figcaption>
+      <figcaption><span>West Seattle Lighthouse</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Whidbey-lighthouse.jpg" alt="Lighthouse, Whidbey" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Admiralty Head Lighthouse</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Admiralty Head Lighthouse</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Amalfi-umbrellas.jpg" alt="Umbrellas, Amalfi" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Umbrellas, Amalfi</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Umbrellas, Amalfi</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Amalfi-waterfrontviews.jpg" alt="Waterfrontviews, Amalfi" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Ocean life, Amalfi</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Ocean life, Amalfi</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film">
       <img src="images/Arizona-taliesinwest.jpg" alt="Taliesinwest, Arizona" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Taliesin West</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Taliesin West</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Astoria-columbiaship.jpg" alt="Columbiaship, Astoria" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Lightship Columbia, Astoria</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Lightship Columbia, Astoria</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Astoria-shipwreck.jpg" alt="Shipwreck, Astoria" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Wreck of the Peter Iredale, Astoria</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Wreck of the Peter Iredale, Astoria</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Ballard-leaves.jpg" alt="Leaves, Ballard" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Through the leaves, Ballard</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Through the leaves, Ballard</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film">
       <img src="images/NYC-Empirestate.jpg" alt="Empirestate, NYC" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Manhattan, NYC</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Manhattan, NYC</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film">
       <img src="images/NYC-Kellogsdiner.jpg" alt="Kellogsdiner, NYC" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Brooklyn Diner, NYC</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Brooklyn Diner, NYC</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Georgetown-starbrassworks.jpg" alt="Starbrassworks, Georgetown" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Neon signs, Georgetown</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Neon signs, Georgetown</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Milan-bigpiazza.jpg" alt="Bigpiazza, Milan" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Piazza del Duomo, Milan</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Piazza del Duomo, Milan</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Florence-souvenirshop.jpg" alt="Souvenirshop, Florence" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Sun-drenched Florence</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Sun-drenched Florence</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Whidbey-beachlogs.jpg" alt="Beachlogs, Whidbey" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Ebey's Landing</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Ebey's Landing</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film places">
+    <figure class="photo" data-tags="film">
       <img src="images/Arizona-sunglarerocks.jpg" alt="Sunglarerocks, Arizona" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Sedona Desert</span><span>Film · Places</span></figcaption>
+      <figcaption><span>Sedona Desert</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film">
       <img src="images/Sanfrancisco-oceanbeach.jpg" alt="Oceanbeach, Sanfrancisco" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Ocean Beach with friends</span><span>Film · People</span></figcaption>
+      <figcaption><span>Ocean Beach with friends</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film">
       <img src="images/Sanfrancisco-palacefinearts.jpg" alt="Palacefinearts, Sanfrancisco" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Palace of Fine Arts</span><span>Film · People</span></figcaption>
+      <figcaption><span>Palace of Fine Arts</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film">
       <img src="images/Sanfrancisco-bleachers.jpg" alt="Bleachers, Sanfrancisco" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Fisherman's Wharf, San Francisco</span><span>Film · People</span></figcaption>
+      <figcaption><span>Fisherman's Wharf, San Francisco</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Whidbey-coupleonbeach.jpg" alt="Coupleonbeach, Whidbey" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Sunset walks, Whidbey Island</span><span>Film · People</span></figcaption>
+      <figcaption><span>Sunset walks, Whidbey Island</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Whidbey-underbridge.jpg" alt="Underbridge, Whidbey" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Deception Pass Bridge</span><span>Film · People</span></figcaption>
+      <figcaption><span>Deception Pass Bridge</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Amalfi-kidsonrocks.jpg" alt="Kidsonrocks, Amalfi" style="width:100%; height:auto; display:block;">
-      <figcaption><span>On the rocks, Amalfi</span><span>Film · People</span></figcaption>
+      <figcaption><span>On the rocks, Amalfi</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film pnw">
       <img src="images/Bainbridge-ferryride.jpg" alt="Ferryride, Bainbridge" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Ferries, Bainbridge Island</span><span>Film · People</span></figcaption>
+      <figcaption><span>Ferries, Bainbridge Island</span><span>Film · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film italy-2025">
       <img src="images/Baveno-islandtown.jpg" alt="Islandtown, Baveno" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Streets of Isola Bella</span><span>Film · People</span></figcaption>
+      <figcaption><span>Streets of Isola Bella</span><span>Film · Italy 2025</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="film people">
+    <figure class="photo" data-tags="film">
       <img src="images/NYC-photoshoot.jpg" alt="Photoshoot, NYC" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Photoshoot moments, NYC</span><span>Film · People</span></figcaption>
+      <figcaption><span>Photoshoot moments, NYC</span><span>Film</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Discoverypark-heart.jpg" alt="Heart, Discoverypark" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Sights at Discovery Park</span><span>Places</span></figcaption>
+      <figcaption><span>Sights at Discovery Park</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Fremont-tattooshop.jpg" alt="Tattooshop, Fremont" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Storefronts of Fremont</span><span>Places</span></figcaption>
+      <figcaption><span>Storefronts of Fremont</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Discoverypark-picnic.jpg" alt="Picnic, Discoverypark" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Picnic at Discovery Park</span><span>Places</span></figcaption>
+      <figcaption><span>Picnic at Discovery Park</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Discoverypark-yellowfield.jpg" alt="Yellowfield, Discoverypark" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Fields at Discovery Park</span><span>Places</span></figcaption>
+      <figcaption><span>Fields at Discovery Park</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Rainier-log.jpg" alt="Log, Rainier" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Mount Rainier National Park</span><span>Places</span></figcaption>
+      <figcaption><span>Mount Rainier National Park</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Rainier-sunset.jpg" alt="Sunset, Rainier" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Mount Rainier sunsets</span><span>Places</span></figcaption>
+      <figcaption><span>Mount Rainier sunsets</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="places">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Bellevue-gardenhouse.jpg" alt="Gardenhouse, Bellevue" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Tateuchi Pavilion, Bellevue</span><span>Places</span></figcaption>
+      <figcaption><span>Tateuchi Pavilion, Bellevue</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Caphill-gymcomp.jpg" alt="Gymcomp, Caphill" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Capitol Hill - Community</span><span>People</span></figcaption>
+      <figcaption><span>Capitol Hill - Community</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Caphill-lostlake.jpg" alt="Lostlake, Caphill" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Capitol Hill - Friends</span><span>People</span></figcaption>
+      <figcaption><span>Capitol Hill - Friends</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-kanehall.jpg" alt="Kanehall, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+      <figcaption><span>CW photoshoot - UW</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-kanehall2.jpg" alt="Kanehall 2, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+      <figcaption><span>CW photoshoot - UW</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-quadbench.jpg" alt="Quadbench, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+      <figcaption><span>CW photoshoot - UW</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-redsquare.jpg" alt="Redsquare, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+      <figcaption><span>CW photoshoot - UW</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-skatepark.jpg" alt="Skatepark, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Skate park, Seattle</span><span>People</span></figcaption>
+      <figcaption><span>Skate park, Seattle</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Carson-uwflowers.jpg" alt="Uwflowers, Carson" style="width:100%; height:auto; display:block;">
-      <figcaption><span>CW photoshoot - UW</span><span>People</span></figcaption>
+      <figcaption><span>CW photoshoot - UW</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Newcastle-beachcouple.jpg" alt="Beachcouple, Newcastle" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Eastside views, Bellevue</span><span>People</span></figcaption>
+      <figcaption><span>Eastside views, Bellevue</span><span>Digital · PNW</span></figcaption>
     </figure>
 
-    <figure class="photo" data-tags="people">
+    <figure class="photo" data-tags="digital pnw">
       <img src="images/Fremont-hiddentattoo.jpg" alt="Hiddentattoo, Fremont" style="width:100%; height:auto; display:block;">
-      <figcaption><span>Daily errands, Seattle</span><span>People</span></figcaption>
+      <figcaption><span>Daily errands, Seattle</span><span>Digital · PNW</span></figcaption>
     </figure>
   </div>
 </main>
@@ -815,7 +862,7 @@
   document.querySelector('h1.name').classList.add('font-' + chosen);
 
   // ---- Filter logic ----
-  const buttons = document.querySelectorAll('.filter-bar button');
+  const buttons = document.querySelectorAll('.filter-bar button[data-filter]');
   const photos = Array.from(document.querySelectorAll('.photo'));
 
   buttons.forEach(btn => {
@@ -834,8 +881,10 @@
   const gallery = document.getElementById('gallery');
   let currentFilter = 'all';
   let currentCols = 0;
+  let currentView = 'grid';
 
   function columnCount(){
+    if (currentView === 'single') return 1;
     const w = window.innerWidth;
     if (w >= 1300) return 5;
     if (w >= 1000) return 4;
@@ -846,6 +895,7 @@
   function layoutGallery(){
     const n = columnCount();
     currentCols = n;
+    gallery.classList.toggle('single', currentView === 'single');
     const cols = [];
     gallery.innerHTML = '';
     for (let i = 0; i < n; i++){
@@ -863,6 +913,18 @@
       }
     });
   }
+
+  document.querySelectorAll('.view-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.view-toggle button').forEach(b => {
+        b.classList.remove('active'); b.setAttribute('aria-pressed','false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed','true');
+      currentView = btn.dataset.view;
+      layoutGallery();
+    });
+  });
 
   window.addEventListener('resize', () => {
     if (columnCount() !== currentCols) layoutGallery();
