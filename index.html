@@ -240,7 +240,7 @@
     width:auto;
     height:auto;
     max-width: 100%;
-    max-height: 76vh;
+    max-height: 70vh;
     display:block;
     object-fit: contain;
   }
@@ -250,7 +250,20 @@
     border-color: #333;
     min-height: 50vh;
   }
-  .lightbox figcaption{ color:#B5B5B0; }
+  .lightbox .lb-title{
+    font-family:'Fraunces', serif;
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
+    line-height: 1.2;
+    text-align: center;
+    margin: 0 0 14px;
+    color: var(--paper);
+  }
+  .lightbox .lb-meta{
+    font-size: 0.85rem;
+    text-align: center;
+    margin: 14px 0 0;
+    color: #B5B5B0;
+  }
   .lightbox-close{
     position:absolute;
     top: 24px; right: var(--edge);
@@ -937,7 +950,16 @@
 
   photos.forEach(fig => {
     fig.addEventListener('click', () => {
-      lbInner.innerHTML = fig.innerHTML;
+      const spans = fig.querySelectorAll('figcaption span');
+      const media = fig.querySelector('img').cloneNode(true);
+      const title = document.createElement('div');
+      title.className = 'lb-title';
+      title.textContent = spans[0] ? spans[0].textContent : '';
+      const meta = document.createElement('div');
+      meta.className = 'lb-meta';
+      meta.textContent = spans[1] ? spans[1].textContent : '';
+      lbInner.innerHTML = '';
+      lbInner.append(title, media, meta);
       lightbox.classList.add('open');
     });
   });
